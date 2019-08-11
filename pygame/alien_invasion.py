@@ -3,26 +3,26 @@ import sys
 import pygame
 
 from settings import Settings
+from ship import Ship
+import game_functions as gf
 
 def run_game():
-    #Inicjalizacja gry i utworzenie obiketu ekranu
+    #initializing a space ship and its location
     pygame.init()
     ai_settings = Settings()
-    screen = pygame.display.set_mode((ai_settings.screen_height, ai_settings.screen_width))
-    pygame.display.set_caption("Inwazja obcych")
+    screen = pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_height))
+    pygame.display.set_caption("Space Invasion")
 
-    #Rozpoczęcie pętli głównej gry.
+    #Creating an space ship
+    ship = Ship(ai_settings,screen)
+
+    #Main loop.
     while True:
 
-        #Oczekiwanie na naciśnięcie klawisza lub przycisku myszy.
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
+        #
+        gf.check_events(ship)
+        ship.update()
+        gf.update_screen(ai_settings,screen,ship)
 
-        #Odświeżanie ekranu w trakcie każdej iteracji pętli
-        screen.fill(ai_settings.bg_color)
-
-        # Wyświtlenie ostatnio zmodyfikowanego ekranu
-        pygame.display.flip()
 
 run_game()

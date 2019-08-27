@@ -29,12 +29,13 @@ class Ship():
     def update(self):
         """Updating ship's location based on a different option of movement"""
 
-        if self.moving_right:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.center += self.ai_settings.ship_speed_factor
-        if self.moving_left:
+        if self.moving_left and self.rect.left >0:
             self.center -= self.ai_settings.ship_speed_factor
         # Updating object rect based on self.center value
         self.rect.centerx = self.center
+
 
     def blitme(self):
         """Displaying a space ship in its current location"""

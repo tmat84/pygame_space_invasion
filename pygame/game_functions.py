@@ -13,8 +13,9 @@ def check_keydown_events(event,ai_settings,screen,ship,bullets):
         # Moving ship in left direction
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
-        new_bullet = Bullet(ai_settings,screen,ship)
-        bullets.add(new_bullet)
+        if len(bullets) < ai_settings.bullets_allowed:
+            new_bullet = Bullet(ai_settings,screen,ship)
+            bullets.add(new_bullet)
 
 def check_keyup_events(event,ship):
     """ Event after releasing key"""
@@ -23,7 +24,16 @@ def check_keyup_events(event,ship):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
 
+def update_bullets(bullets):
+    """ Update bullets location and removing the bullets which goes outside the screen """
 
+    #Update location of bullet
+    bullets.update()
+
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
+    print(len(bullets))
 
 def check_events(ai_settings,screen,ship,bullets):
     """ Reaction for mouse and keyboard events"""

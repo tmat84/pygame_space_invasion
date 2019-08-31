@@ -12,10 +12,23 @@ def check_keydown_events(event,ai_settings,screen,ship,bullets):
     elif event.key == pygame.K_LEFT:
         # Moving ship in left direction
         ship.moving_left = True
+    elif event.key == pygame.K_UP:
+        # Moving ship in left direction
+        ship.moving_up = True
+    elif event.key == pygame.K_DOWN:
+        # Moving ship in left direction
+        ship.moving_down = True
     elif event.key == pygame.K_SPACE:
-        if len(bullets) < ai_settings.bullets_allowed:
-            new_bullet = Bullet(ai_settings,screen,ship)
-            bullets.add(new_bullet)
+        fire_bullet(ai_settings,screen,ship,bullets)
+    elif event.key == pygame.K_q:
+        sys.exit()
+
+def fire_bullet(ai_settings,screen, ship, bullets):
+    """ Fire the bullet if the limit is not reached"""
+    # Creating a new bullet and adding it to the group
+    if len(bullets) < ai_settings.bullets_allowed:
+        new_bullet = Bullet(ai_settings,screen,ship)
+        bullets.add(new_bullet)
 
 def check_keyup_events(event,ship):
     """ Event after releasing key"""
@@ -23,6 +36,10 @@ def check_keyup_events(event,ship):
         ship.moving_right = False
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
+    elif event.key == pygame.K_UP:
+        ship.moving_up = False
+    elif event.key == pygame.K_DOWN:
+        ship.moving_down = False
 
 def update_bullets(bullets):
     """ Update bullets location and removing the bullets which goes outside the screen """
@@ -47,7 +64,7 @@ def check_events(ai_settings,screen,ship,bullets):
             check_keyup_events(event,ship)
 
 
-def update_screen(ai_settings, screen, ship,bullets):
+def update_screen(ai_settings, screen, ship,alien,bullets):
     """ Update a screen and going to a new screen"""
     # Screen refresh after every iteration
     screen.fill (ai_settings.bg_color)
@@ -55,5 +72,6 @@ def update_screen(ai_settings, screen, ship,bullets):
         bullet.draw_bullet()
 
     ship.blitme ()
+    alien.blitme()
     # Displaying last modified screen
     pygame.display.flip ()

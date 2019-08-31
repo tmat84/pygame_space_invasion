@@ -7,7 +7,7 @@ class Bullet(Sprite):
     def __init__(self,ai_settings,screen,ship):
         """ Creating a bullet object """
 
-        super().__init__()
+        super(Bullet,self).__init__()
         self.screen = screen
 
         self.rect = pygame.Rect(0,0,ai_settings.bullet_width,
